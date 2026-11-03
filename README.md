@@ -36,6 +36,14 @@ Drag-and-drop the folder (Netlify Drop) or connect the repo. No build command, p
 
 > Every time you change files, bump `CACHE` in `sw.js` (e.g. `mylifeos-v1.0.1`) so installed phones fetch the new version. The app shows an "Update ready → Reload" toast when a new version is available.
 
+## 2b. Single-file version (no server, no zip)
+
+```bash
+node tools/build-single.js
+```
+
+This writes `MyLifeOS.html` — the whole app (CSS, JS, icon) in one file. Send that one file to your phone (WhatsApp, Drive, USB) and open it in Chrome; everything works offline and data is saved in the browser. The service worker and the "Install app" prompt do not run from `file://`, so use Chrome's *Add to Home screen* for a shortcut instead. Back up with Settings → Export JSON as usual.
+
 ## 3. Install on Android (Chrome)
 
 1. Open the HTTPS URL in **Chrome** on your phone.
@@ -97,6 +105,7 @@ js/forms.js         add/edit forms for every record type, quick-add
 js/views/*.js       one file per screen
 tests/engine.test.js  Node unit tests for the data engine
 tools/make-icons.js   regenerates the PNG icons
+tools/build-single.js bundles the app into one MyLifeOS.html
 ```
 
 ## 8. Tests
