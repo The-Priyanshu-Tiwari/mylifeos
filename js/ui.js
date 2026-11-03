@@ -33,9 +33,11 @@
     const isTab = ['home', 'tasks', 'expenses', 'finance', 'more'].includes(name);
     document.getElementById('btn-back').hidden = isTab;
     document.querySelectorAll('.bottom-nav a').forEach(a => a.classList.toggle('active', a.dataset.nav === (isTab ? name : def.tab || 'more')));
-    const el = viewEl();
+    // Fresh element every render so listeners bound by the previous render never pile up.
+    const old = viewEl();
+    const el = old.cloneNode(false);
+    old.replaceWith(el);
     try {
-      el.innerHTML = '';
       def.render(el, params);
     } catch (e) {
       console.error(e);
@@ -160,6 +162,7 @@
     const seg = b.parentElement;
     seg.querySelectorAll('button').forEach(x => x.classList.toggle('active', x === b));
     const inp = seg.querySelector('input[type=hidden]');
+    if (!inp) return; // view-level seg controls handle their own clicks
     inp.value = b.dataset.v;
     inp.dispatchEvent(new Event('change', { bubbles: true }));
   });

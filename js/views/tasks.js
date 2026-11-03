@@ -34,7 +34,7 @@
         if (list.length) h += '<div class="card tight mb"><div class="row between small"><span class="muted">' + st.done + ' of ' + st.total + ' completed</span><span class="bold">' + st.pct + '%</span></div>' + UI.progress(st.pct, st.pct === 100 ? 'good' : '') + '</div>';
         h += '<div class="card" id="day-list">' + (list.length ? list.map(t => root.taskRow(t, today)).join('') : UI.empty('🗓️', 'No tasks on ' + U.relDay(sel, today).toLowerCase(), 'Tap + Add to plan this day')) + '</div>';
         if (sel === today && overdue.length) h += '<div class="section-head"><h2 class="bad">Overdue (' + overdue.length + ')</h2><button class="link" data-carry>Move all to today</button></div><div class="card" id="over-list">' + overdue.map(t => root.taskRow(t, today)).join('') + '</div>';
-        const recent = Tasks.recentlyCompleted(5);
+        const recent = Tasks.recentlyCompleted(8).filter(t => t.date !== sel).slice(0, 5); // skip ones already shown above
         if (recent.length) h += '<div class="section-head"><h2>Recently completed</h2></div><div class="card" id="recent-list">' + recent.map(t => root.taskRow(t, today)).join('') + '</div>';
       } else if (state.mode === 'calendar') {
         h += root.calendarHTML(sel, { tasks: true, events: false }) + '<div class="section-head"><h2>' + U.relDay(sel, today) + '</h2><button class="link" data-add>+ Add</button></div>';
