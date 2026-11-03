@@ -6,6 +6,7 @@ A private, offline-first personal dashboard for **tasks, expenses, finance, habi
 - Dates: `DD MMM YYYY`, timezone **Asia/Kolkata** regardless of device settings
 - Works fully offline after the first load (service worker)
 - Installable on Android Chrome as a home-screen app
+- **Live:** <https://the-priyanshu-tiwari.github.io/mylifeos/> (GitHub Pages, repo `The-Priyanshu-Tiwari/mylifeos`)
 
 ---
 
