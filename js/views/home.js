@@ -66,7 +66,7 @@
       const backupDue = s.settings.backupReminderDays > 0 && (s.transactions.length + s.tasks.length > 5) && (Date.now() - (s.settings.lastBackupAt || s.createdAt)) > s.settings.backupReminderDays * 86400000;
 
       el.innerHTML =
-        '<div class="row between" style="align-items:flex-start"><div><div class="muted small">' + U.fmtDate(today, { weekday: true }) + '</div><h2 style="font-size:22px">' + U.greeting() + U.esc(name) + ' 👋</h2></div></div>' +
+        '<div class="row between" style="align-items:flex-start"><div><div class="muted small">' + U.fmtDate(today, { weekday: true }) + '</div><h2 style="font-size:22px">' + U.greeting() + U.esc(name) + ' 👋</h2><button class="link xs" data-rename>' + (s.settings.name ? 'Change name' : 'Add your name') + '</button></div></div>' +
         '<p class="faint small mt-s" style="font-style:italic">“' + quote + '”</p>' +
         (s._recovered ? '<div class="alert warn mt">⚠ Your main data file was unreadable; the last good backup copy was restored.</div>' : '') +
         (backupDue ? '<div class="alert info mt"><span>💾</span><span class="grow">It has been a while since your last backup.</span><button class="link" data-go="settings">Back up now</button></div>' : '') +
@@ -107,6 +107,7 @@
         const h = e.target.closest('[data-habit]'); if (h) { Habits.toggle(h.dataset.habit); return; }
         if (e.target.closest('[data-carry]')) { const n = Tasks.carryForward(); UI.toast(n + ' task(s) moved to today'); return; }
         const g = e.target.closest('[data-go]'); if (g) UI.go(g.dataset.go);
+        if (e.target.closest('[data-rename]')) { UI.prompt({ title: 'What should I call you?', label: 'Your name', value: s.settings.name }).then(v => { if (v === null || v === undefined) return; DB.update(st => { st.settings.name = String(v).trim(); }); UI.toast(String(v).trim() ? 'Name updated' : 'Name cleared'); }); return; }
       });
       ['home-tasks', 'home-overdue', 'home-upcoming'].forEach(id => { const x = el.querySelector('#' + id); if (x) bindTaskList(x); });
       bindTxList(el.querySelector('#home-tx'));

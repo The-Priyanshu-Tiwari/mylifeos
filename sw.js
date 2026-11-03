@@ -1,6 +1,6 @@
 /* MyLife OS service worker — precaches the app shell so it works fully offline.
    Bump CACHE version whenever files change so clients pick up the update. */
-const CACHE = 'mylifeos-v1.0.4';
+const CACHE = 'mylifeos-v1.0.5';
 const SHELL = [
   './', './index.html', './manifest.json', './css/app.css',
   './js/util.js', './js/db.js', './js/finance.js', './js/tasks.js', './js/models.js', './js/charts.js', './js/ui.js', './js/forms.js',

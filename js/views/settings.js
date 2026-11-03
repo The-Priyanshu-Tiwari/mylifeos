@@ -71,7 +71,9 @@
         '<div class="card mt"><div class="card-title">Tasks & notes</div><div class="stack"><button class="btn" data-cats="taskCategories">Task categories</button><button class="btn" data-cats="noteCategories">Note categories</button><button class="btn" data-notif>' + (('Notification' in window) ? (Notification.permission === 'granted' ? '🔔 Reminders enabled' : 'Enable reminder notifications') : 'Notifications not supported') + '</button></div></div>' +
         '<div class="card mt"><div class="card-title">App</div><div class="small muted">Version 1.0 · ' + (navigator.onLine ? 'Online' : 'Offline') + ' · ' + (window.matchMedia('(display-mode: standalone)').matches ? 'Installed as app' : 'Running in browser') + '</div><div class="stack mt"><button class="btn" data-install hidden>📲 Install app on home screen</button><button class="btn" data-update>Check for updates</button><button class="btn danger" data-wipe>Erase all data</button></div></div>';
 
-      el.querySelector('[data-name]').addEventListener('change', e => DB.update(st => { st.settings.name = e.target.value.trim(); }, { silent: true }));
+      const nameEl = el.querySelector('[data-name]');
+      nameEl.addEventListener('input', U.debounce(() => DB.update(st => { st.settings.name = nameEl.value.trim(); }, { silent: true }), 300));
+      nameEl.addEventListener('change', () => { DB.update(st => { st.settings.name = nameEl.value.trim(); }, { silent: true }); UI.toast('Name saved'); });
       el.querySelector('input[name=theme]').addEventListener('change', e => { DB.update(st => { st.settings.theme = e.target.value; }, { silent: true }); root.applyTheme(); });
       el.querySelector('select[name=defAcc]').addEventListener('change', e => DB.update(st => { st.settings.defaultAccountId = e.target.value; }, { silent: true }));
       el.querySelector('select[name=bk]').addEventListener('change', e => DB.update(st => { st.settings.backupReminderDays = +e.target.value; }, { silent: true }));
