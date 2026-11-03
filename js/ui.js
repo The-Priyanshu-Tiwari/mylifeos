@@ -53,6 +53,7 @@
 
   // opts: { title, body (html string | element), submit: 'Save', onSubmit(formEl) -> truthy to close,
   //         danger: {label, onClick}, onOpen(el) }
+  let sheetSeq = 0;
   function sheet(opts) {
     const bd = document.createElement('div');
     bd.className = 'sheet-backdrop';
@@ -73,7 +74,11 @@
       foot.appendChild(b);
     }
     if (opts.onSubmit !== undefined) {
+      // The footer lives outside the <form>, so bind the button to it explicitly (and submit by hand as a fallback).
+      if (!form.id) form.id = 'sheet-form-' + (++sheetSeq);
       const b = document.createElement('button'); b.type = 'submit'; b.className = 'btn primary'; b.textContent = opts.submit || 'Save';
+      b.setAttribute('form', form.id);
+      b.addEventListener('click', e => { e.preventDefault(); if (form.requestSubmit) form.requestSubmit(); else form.dispatchEvent(new Event('submit', { cancelable: true })); });
       foot.appendChild(b);
     } else foot.remove();
     form.onsubmit = (e) => {

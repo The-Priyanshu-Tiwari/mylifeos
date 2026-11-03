@@ -1,6 +1,6 @@
 /* MyLife OS service worker — precaches the app shell so it works fully offline.
    Bump CACHE version whenever files change so clients pick up the update. */
-const CACHE = 'mylifeos-v1.0.1';
+const CACHE = 'mylifeos-v1.0.2';
 const SHELL = [
   './', './index.html', './manifest.json', './css/app.css',
   './js/util.js', './js/db.js', './js/finance.js', './js/tasks.js', './js/models.js', './js/charts.js', './js/ui.js', './js/forms.js',
@@ -10,7 +10,7 @@ const SHELL = [
 ];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)));
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL.map(u => new Request(u, { cache: 'reload' })))));
 });
 
 self.addEventListener('activate', e => {
