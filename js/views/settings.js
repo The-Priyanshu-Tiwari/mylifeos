@@ -92,7 +92,7 @@
           if (!await UI.confirm({ title: 'Erase all data?', message: 'Everything — transactions, tasks, notes, habits, goals — will be permanently deleted from this device. Export a backup first!', ok: 'Erase everything' })) return;
           const typed = await UI.prompt({ title: 'Type ERASE to confirm', label: 'Confirmation' });
           if (typed !== 'ERASE') { UI.toast('Cancelled'); return; }
-          DB.reset(); UI.toast('All data erased'); UI.go('home');
+          DB.reset(); DB.saveNow(); location.hash = '#/home'; location.reload(); // fresh start shows the welcome sheet again
         }
       });
     },
