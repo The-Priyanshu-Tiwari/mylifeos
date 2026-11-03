@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>MyLife OS</title>
+  <meta name="description" content="Personal life management: tasks, expenses, finance, habits, goals, notes — offline, private, on your phone.">
+  <meta name="theme-color" content="#f6f6f3" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="MyLife OS">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="css/app.css">
+  <script>
+    // Apply saved theme before first paint to avoid a flash
+    try { var _t = JSON.parse(localStorage.getItem('mylifeos.v1') || '{}'); var th = _t.settings && _t.settings.theme; if (th === 'dark' || th === 'light') document.documentElement.setAttribute('data-theme', th); } catch (e) {}
+  </script>
+</head>
+<body>
+  <div id="app">
+    <header class="topbar" id="topbar">
+      <div class="topbar-inner">
+        <button class="icon-btn" id="btn-back" aria-label="Back" hidden>‹</button>
+        <h1 class="topbar-title" id="page-title">MyLife OS</h1>
+        <div class="topbar-actions">
+          <button class="icon-btn" id="btn-search" aria-label="Search">⌕</button>
+          <button class="icon-btn" id="btn-theme" aria-label="Toggle theme">◐</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="view" class="view" aria-live="polite"></main>
+
+    <button class="fab" id="fab" aria-label="Quick add">+</button>
+
+    <nav class="bottom-nav" id="bottom-nav" aria-label="Main">
+      <a href="#/home" data-nav="home"><span class="nav-ico">⌂</span><span>Home</span></a>
+      <a href="#/tasks" data-nav="tasks"><span class="nav-ico">☑</span><span>Tasks</span></a>
+      <a href="#/expenses" data-nav="expenses"><span class="nav-ico">₹</span><span>Expenses</span></a>
+      <a href="#/finance" data-nav="finance"><span class="nav-ico">◱</span><span>Finance</span></a>
+      <a href="#/more" data-nav="more"><span class="nav-ico">⋯</span><span>More</span></a>
+    </nav>
+  </div>
+
+  <div id="sheet-root"></div>
+  <div id="toast-root" aria-live="assertive"></div>
+
+  <script src="js/util.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/finance.js"></script>
+  <script src="js/tasks.js"></script>
+  <script src="js/models.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/forms.js"></script>
+  <script src="js/views/home.js"></script>
+  <script src="js/views/tasks.js"></script>
+  <script src="js/views/expenses.js"></script>
+  <script src="js/views/finance.js"></script>
+  <script src="js/views/more.js"></script>
+  <script src="js/views/habits.js"></script>
+  <script src="js/views/goals.js"></script>
+  <script src="js/views/notes.js"></script>
+  <script src="js/views/calendar.js"></script>
+  <script src="js/views/reports.js"></script>
+  <script src="js/views/settings.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
