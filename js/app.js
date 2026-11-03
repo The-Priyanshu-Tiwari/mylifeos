@@ -74,6 +74,7 @@
     // offline/online indicator
     function net() { let b = document.getElementById('net-banner'); if (!navigator.onLine) { if (!b) { b = document.createElement('div'); b.id = 'net-banner'; b.className = 'offline-banner'; b.textContent = 'Offline — everything still works and is saved on this device.'; document.getElementById('topbar').appendChild(b); } } else if (b) b.remove(); }
     window.addEventListener('online', net); window.addEventListener('offline', net); net();
+    if (!DB.persistent) { const b = document.createElement('div'); b.className = 'offline-banner'; b.style.background = 'var(--bad)'; b.textContent = 'Storage is blocked here — nothing will be saved. Open the app from an https:// link in Chrome.'; document.getElementById('topbar').appendChild(b); }
 
     // install prompt
     window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); root.deferredInstall = e; });

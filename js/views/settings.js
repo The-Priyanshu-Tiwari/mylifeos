@@ -57,7 +57,7 @@
     title: 'Settings', tab: 'more', noFab: true,
     render(el) {
       const s = DB.get();
-      const size = Math.round((localStorage.getItem(DB.KEY) || '').length / 1024);
+      const size = Math.round(DB.rawSize() / 1024);
       el.innerHTML =
         '<div class="card"><div class="card-title">Profile</div>' + UI.field('Your name (for the greeting)', UI.input('name', s.settings.name, 'data-name placeholder="e.g. Priya"')) +
           '<div class="field"><label>Theme</label>' + UI.segmented('theme', [['auto', 'Auto'], ['light', 'Light'], ['dark', 'Dark']], s.settings.theme) + '</div>' +

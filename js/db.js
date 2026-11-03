@@ -102,7 +102,8 @@
   // ---- storage ---------------------------------------------------------------
   let state = null;
   const listeners = new Set();
-  let storage = (typeof localStorage !== 'undefined') ? localStorage : null;
+  let storage = null;
+  try { storage = root.localStorage; storage.getItem(KEY); } catch (e) { storage = null; } // blocked in some viewers / content:// origins
   let memory = {};
   function lsGet(k) { try { return storage ? storage.getItem(k) : (memory[k] || null); } catch (e) { return memory[k] || null; } }
   function lsSet(k, v) { try { if (storage) storage.setItem(k, v); else memory[k] = v; } catch (e) { memory[k] = v; throw e; } }
@@ -203,6 +204,8 @@
     KEY, VERSION, defaultState, normalize, validate, load, get, update, saveNow, subscribe, replace, reset,
     exportJSON, mergeFrom, logActivity, get lastError() { return lastError; },
     _useMemory() { storage = null; memory = {}; state = null; },
+    get persistent() { return storage !== null; },
+    rawSize() { return (lsGet(KEY) || '').length; },
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = DB;
   else root.DB = DB;
